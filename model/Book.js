@@ -20,7 +20,11 @@ const bookSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    reviews:[reviewSchema]
+    reviews:[reviewSchema],
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    }
 }, {timestamps: true})
 
 module.exports = mongoose.model('Book', bookSchema)

@@ -16,6 +16,8 @@ const express = require('express')
 const logger = require('./logger')
 const path = require('path')
 const book_router = require('./routes/books-router')
+const category_router = require('./routes/category-routes')
+
 const app = express()
 const port  = 3000
 
@@ -49,6 +51,7 @@ app.get('^/$|/index(.html)?', (req, res) => {
 
 //3. Router level middleware
 app.use('/books', book_router)
+app.use('/category', category_router)
 
 
 //4. Error handling middleware
