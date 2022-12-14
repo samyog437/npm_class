@@ -17,6 +17,7 @@ const logger = require('./logger')
 const path = require('path')
 const book_router = require('./routes/books-router')
 const category_router = require('./routes/category-routes')
+const user_router = require('./routes/user-routes')
 
 const app = express()
 const port  = 3000
@@ -50,6 +51,7 @@ app.get('^/$|/index(.html)?', (req, res) => {
 })
 
 //3. Router level middleware
+app.use('/user', user_router)
 app.use('/books', book_router)
 app.use('/category', category_router)
 
