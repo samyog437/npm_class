@@ -11,13 +11,14 @@
 // // store message into a text file
 // // user id datetime message
 
-
+require('dotenv').config()
 const express = require('express')
 const logger = require('./logger')
 const path = require('path')
 const book_router = require('./routes/books-router')
 const category_router = require('./routes/category-routes')
 const user_router = require('./routes/user-routes')
+const auth = require('./middleware/auth')
 
 const app = express()
 const port  = 3000
@@ -52,12 +53,14 @@ app.get('^/$|/index(.html)?', (req, res) => {
 
 //3. Router level middleware
 app.use('/user', user_router)
+app.use(auth.verifyUser)
 app.use('/books', book_router)
 app.use('/category', category_router)
 
 
 //4. Error handling middleware
 app.use((err, req, res, next) => {
-    console.log(err)
-    res.status(500).json({"err": err.message})
+    console.log(err.stack)
+    if (res.statusCode == 200) res.status(500)
+    res.json({"msg": err.message})
 })
